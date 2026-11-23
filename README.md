@@ -32,6 +32,21 @@ python "Week 4-5 - Data Preparation and Machine Learning/data_preparation.py"
 python "Week 4-5 - Data Preparation and Machine Learning/machine_learning_models.py"
 ```
 
+## Weeks 6–12 and Capstone
+
+Additional practical assignments have been added:
+- Week 6: Supervised learning and model evaluation
+- Week 7: Advanced ML and neural networks
+- Week 8: Unsupervised learning
+- Week 9: ML pipelines and automation
+- Week 10: Optimization, performance monitoring, and deployment
+- Week 11: Responsible and explainable AI
+- Week 12: Generative AI and prompt engineering
+- Capstone (Weeks 9–12): Synthetic customer churn prediction workflow
+
+Each week has its own folder containing a README and a runnable Python assignment script. The capstone folder contains the project brief. These are practice assignments aligned with the course outline; exact official task wording should be checked against the official task sheets.
+
+
 ## Folder contents
 - Each week group has a README describing the work and learning outcomes.
 - Scripts use small, reproducible example datasets so they can run locally without cloud credentials.
