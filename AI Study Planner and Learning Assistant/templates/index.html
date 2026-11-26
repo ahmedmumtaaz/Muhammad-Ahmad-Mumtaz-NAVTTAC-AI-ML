@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Planner | Learning Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">S</span> StudySpace</a>
+    <span class="top-note">Your learning, organized</span>
+  </header>
+  <main class="container">
+    <section class="welcome">
+      <div><p class="eyebrow">STUDENT PRODUCTIVITY WORKSPACE</p>
+        <h1>Make time for <span>what matters.</span></h1>
+        <p class="subheading">Plan your learning, stay on track, and take the next best step.</p>
+      </div>
+      <div class="date-card"><span>TODAY</span><strong>{{ today }}</strong></div>
+    </section>
+    <section class="stats">
+      <article class="stat-card"><span>Pending tasks</span><strong>{{ pending_count }}</strong><small>Ready to work on</small></article>
+      <article class="stat-card"><span>Completed</span><strong>{{ completed_count }}</strong><small>Learning milestones</small></article>
+      <article class="stat-card"><span>Study time left</span><strong>{{ total_minutes }} <small>min</small></strong><small>Estimated across pending tasks</small></article>
+    </section>
+    <section class="recommendation">
+      <div class="recommend-icon">✦</div><div class="recommend-copy">
+      <p class="eyebrow">SMART STUDY SUGGESTION</p>
+      {% if recommendation %}
+        <h2>{{ recommendation.title }}</h2>
+        <p>{{ recommendation.reason }} <b>{{ recommendation.subject }}</b> · {{ recommendation.priority_score }} priority points</p>
+      {% else %}
+        <h2>You're all caught up!</h2><p>Add a study task to get your next recommendation.</p>
+      {% endif %}
+      </div>
+    </section>
+    <div class="content-grid">
+      <section class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">YOUR WORKLOAD</p><h2>Study tasks</h2></div><span class="count-pill">{{ tasks|length }} total</span></div>
+        <div id="task-list" class="task-list">
+          {% for task in tasks %}
+          <article class="task {% if task.completed %}is-complete{% endif %}" data-id="{{ task.id }}">
+            <button class="check-btn" data-action="toggle" aria-label="Toggle completion">{% if task.completed %}✓{% else %}○{% endif %}</button>
+            <div class="task-info"><strong>{{ task.title }}</strong><span>{{ task.subject }} · Due {{ task.due_date }} · {{ task.estimated_minutes }} min</span></div>
+            <span class="difficulty {{ task.difficulty }}">{{ task.difficulty }}</span>
+            <button class="delete-btn" data-action="delete" aria-label="Delete task">×</button>
+          </article>
+          {% else %}<div class="empty-state">No tasks yet. Add your first study task.</div>{% endfor %}
+        </div>
+      </section>
+      <aside class="panel form-panel">
+        <p class="eyebrow">BUILD YOUR PLAN</p><h2>Add a study task</h2>
+        <form id="task-form">
+          <label for="title">Task title</label><input id="title" name="title" maxlength="100" placeholder="e.g. Practice Python functions" required>
+          <label for="subject">Subject</label><input id="subject" name="subject" maxlength="60" placeholder="e.g. Artificial Intelligence" required>
+          <label for="due_date">Due date</label><input id="due_date" name="due_date" type="date" min="{{ today }}" value="{{ today }}" required>
+          <div class="form-row"><div><label for="estimated_minutes">Minutes</label><input id="estimated_minutes" name="estimated_minutes" type="number" min="1" max="1440" value="45" required></div>
+          <div><label for="difficulty">Difficulty</label><select id="difficulty" name="difficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div></div>
+          <button class="primary-btn" type="submit">＋ Add to my plan</button><p id="form-message" class="form-message" role="status"></p>
+        </form>
+      </aside>
+    </div>
+    <footer>StudySpace · A NAVTTC AI/ML learning project</footer>
+  </main>
+</body>
+</html>
